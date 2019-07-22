@@ -21,13 +21,15 @@ enum TypeConverter: String {
     case mi_to_km = "Miles to Kilometers"
     case m_to_cm = "Meters to Centimeters"
     case cm_to_m = "Centimeters to Meters"
+    case dol_to_chy = "US Dollars to Chinese Yuan"
+    case chy_to_dol = "Chinese Yuan to US Dollars"
 }
 
 class ConversionCalculatorViewController: UIViewController {
     @IBOutlet weak var OutputDisplay: UITextField!
     @IBOutlet weak var InputDisplay: UITextField!
     
-    var currentConverter: UnitConverter = UnitConverter(label: TypeConverter.F_to_C.rawValue, inputUnit: "F°", outputUnit: "C°")
+    var currentConverter: UnitConverter = UnitConverter(label: TypeConverter.F_to_C.rawValue, inputUnit: "0.0 F°", outputUnit: "0.0 C°")
     
     var conversions = [UnitConverter(label: TypeConverter.F_to_C.rawValue, inputUnit: "F°", outputUnit: "C°"),
                        UnitConverter(label: TypeConverter.C_to_F.rawValue, inputUnit: "C°", outputUnit: "F°"),
@@ -35,8 +37,8 @@ class ConversionCalculatorViewController: UIViewController {
                         UnitConverter(label: TypeConverter.km_to_mi.rawValue, inputUnit: "km", outputUnit: "mi"),
                         UnitConverter(label: TypeConverter.m_to_cm.rawValue, inputUnit: "m", outputUnit: "cm"),
                         UnitConverter(label: TypeConverter.cm_to_m.rawValue, inputUnit: "cm", outputUnit: "m"),
-                        UnitConverter(label: "US Dollars to Chinese Yuan", inputUnit: "$", outputUnit: "¥"),
-                        UnitConverter(label: "Chinese Yuan to US Dollars", inputUnit: "¥", outputUnit: "$")]
+                        UnitConverter(label: TypeConverter.dol_to_chy.rawValue, inputUnit: "$", outputUnit: "¥"),
+                        UnitConverter(label: TypeConverter.chy_to_dol.rawValue, inputUnit: "¥", outputUnit: "$")]
     
     var inputNum: Double = 0
     var outputNum: Double = 0
@@ -44,8 +46,6 @@ class ConversionCalculatorViewController: UIViewController {
     var outputString: String = ""
     var inputUnit: String = ""
     var outputUnit: String = ""
-    var positiveOrNegative = ""
-    var Negative = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -131,20 +131,16 @@ class ConversionCalculatorViewController: UIViewController {
     }
     
     @IBAction func signChangeButton(_ sender: Any) {
-        Negative = !Negative
-        if Negative {
-            positiveOrNegative = "-"
-        }
-        else {
-            positiveOrNegative = ""
-        }
+        inputNum *= -1
+        InputDisplay.text = makeInput(inputNum: inputNum, inputUnit: inputUnit)
+        OutputDisplay.text = makeOutput(inputNum: inputNum, outputUnit: outputUnit)
     }
     
     @IBAction func number9Button(_ sender: Any) {
         inputString.append("9")
         inputNum = Double(inputString) ?? 0
-        self.InputDisplay.text = makeInput(inputNum: inputNum, inputUnit: inputUnit)
-        self.OutputDisplay.text = makeOutput(inputNum: inputNum, outputUnit: outputUnit)
+        InputDisplay.text = makeInput(inputNum: inputNum, inputUnit: inputUnit)
+        OutputDisplay.text = makeOutput(inputNum: inputNum, outputUnit: outputUnit)
     }
     
     @IBAction func number8Button(_ sender: Any) {
@@ -211,14 +207,8 @@ class ConversionCalculatorViewController: UIViewController {
     }
     
     @IBAction func decimalButton(_ sender: Any) {
-        if inputString.contains(".") {
-            return
-        }
-        else {
             inputString.append(".")
             self.InputDisplay.text = makeInput(inputNum: inputNum, inputUnit: inputUnit)
             self.OutputDisplay.text = makeOutput(inputNum: inputNum, outputUnit: outputUnit)
         }
     }
-}
-
