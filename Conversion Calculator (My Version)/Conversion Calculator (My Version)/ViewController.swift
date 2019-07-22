@@ -14,32 +14,27 @@ struct UnitConverter {
     let outputUnit: String
 }
 
-enum operations {
-    case addition
-    case subtraction
-    case multiplication
-    case division
-    case idle
+enum TypeConverter: String {
+    case F_to_C = "Fahrenheit to Celsius"
+    case C_to_F = "Celsius to Fahrenheit"
+    case km_to_mi = "Kilometers to Miles"
+    case mi_to_km = "Miles to Kilometers"
+    case m_to_cm = "Meters to Centimeters"
+    case cm_to_m = "Centimeters to Meters"
 }
 
 class ConversionCalculatorViewController: UIViewController {
     @IBOutlet weak var OutputDisplay: UITextField!
     @IBOutlet weak var InputDisplay: UITextField!
     
-    var currentMode = operations.idle
-    var textDisplay = "0"
-    var previousNumber = 0
-    var previousButtonWasMode = false
-    var numberOnScreen = 0
+    var currentConverter: UnitConverter = UnitConverter(label: TypeConverter.F_to_C.rawValue, inputUnit: "F°", outputUnit: "C°")
     
-    var conversions = [UnitConverter(label: "Fahrenheit to Celsius", inputUnit: "F°", outputUnit: "C°"),
-                       UnitConverter(label: "Celsius to Fahrenheit", inputUnit: "C°", outputUnit: "F°"),
-                        UnitConverter(label: "Miles to Kilometers", inputUnit: "mi", outputUnit: "km"),
-                        UnitConverter(label: "Kilometers to Miles", inputUnit: "km", outputUnit: "mi"),
-                        UnitConverter(label: "Meters to Centimeters", inputUnit: "m", outputUnit: "cm"),
-                        UnitConverter(label: "Centimeters to Meters", inputUnit: "cm", outputUnit: "m"),
-                        UnitConverter(label: "Kilometers to Meters", inputUnit: "km", outputUnit: "m"),
-                        UnitConverter(label: "Kilograms to Grams", inputUnit: "kg", outputUnit: "g"),
+    var conversions = [UnitConverter(label: TypeConverter.F_to_C.rawValue, inputUnit: "F°", outputUnit: "C°"),
+                       UnitConverter(label: TypeConverter.C_to_F.rawValue, inputUnit: "C°", outputUnit: "F°"),
+                        UnitConverter(label: TypeConverter.mi_to_km.rawValue, inputUnit: "mi", outputUnit: "km"),
+                        UnitConverter(label: TypeConverter.km_to_mi.rawValue, inputUnit: "km", outputUnit: "mi"),
+                        UnitConverter(label: TypeConverter.m_to_cm.rawValue, inputUnit: "m", outputUnit: "cm"),
+                        UnitConverter(label: TypeConverter.cm_to_m.rawValue, inputUnit: "cm", outputUnit: "m"),
                         UnitConverter(label: "US Dollars to Chinese Yuan", inputUnit: "$", outputUnit: "¥"),
                         UnitConverter(label: "Chinese Yuan to US Dollars", inputUnit: "¥", outputUnit: "$")]
     
@@ -49,6 +44,8 @@ class ConversionCalculatorViewController: UIViewController {
     var outputString: String = ""
     var inputUnit: String = ""
     var outputUnit: String = ""
+    var positiveOrNegative = ""
+    var Negative = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,14 +126,18 @@ class ConversionCalculatorViewController: UIViewController {
         inputNum = 0
         inputString = ""
         outputString = ""
-        self.InputDisplay.text = inputUnit
-        self.OutputDisplay.text = outputUnit
+        InputDisplay.text = "\(currentConverter.inputUnit)"
+        OutputDisplay.text = "\(currentConverter.outputUnit)"
     }
     
     @IBAction func signChangeButton(_ sender: Any) {
-        inputNum *= 1
-        self.InputDisplay.text = makeInput(inputNum: inputNum, inputUnit: inputUnit)
-        self.OutputDisplay.text = makeOutput(inputNum: inputNum, outputUnit: outputUnit)
+        Negative = !Negative
+        if Negative {
+            positiveOrNegative = "-"
+        }
+        else {
+            positiveOrNegative = ""
+        }
     }
     
     @IBAction func number9Button(_ sender: Any) {
@@ -218,92 +219,6 @@ class ConversionCalculatorViewController: UIViewController {
             self.InputDisplay.text = makeInput(inputNum: inputNum, inputUnit: inputUnit)
             self.OutputDisplay.text = makeOutput(inputNum: inputNum, outputUnit: outputUnit)
         }
-    }
-    
-    
-    
-    @IBAction func addButton(_ sender: Any) {
-        InputDisplay.text = String(previousNumber + numberOnScreen)
-    }
-    
-    @IBAction func subtractButton(_ sender: Any) {
-        changeModes(newMode: .subtraction)
-    }
-    
-    @IBAction func multiplyButton(_ sender: Any) {
-        changeModes(newMode: .multiplication)
-    }
-    
-    @IBAction func divideButton(_ sender: Any) {
-        changeModes(newMode: .division)
-    }
-    
-    @IBAction func equalButton(_ sender: Any) {
-        let button = convertLabelTextToInt()
-        
-        if currentMode == .idle || previousButtonWasMode {
-            return
-        }
-        
-        if currentMode == .addition {
-            previousNumber += button
-        }
-        
-        else if currentMode == .subtraction {
-            previousNumber -= button
-        }
-        
-        else if currentMode == .multiplication {
-            previousNumber *= button
-        }
-        
-        else if currentMode == .division {
-            previousNumber /= button
-        }
-        
-        currentMode = .idle
-        textDisplay = "\(previousNumber)"
-        textUpdate()
-        previousButtonWasMode = true
-    }
-    
-    func textUpdate() {
-        let button = convertLabelTextToInt()
-        
-        if currentMode == .idle {
-            previousNumber = button
-        }
-        
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        let number1 = NSNumber(value: button)
-        
-        textDisplay = "\(button)"
-        OutputDisplay.text = formatter.string(from: number1)
-        InputDisplay.text = formatter.string(from: number1)
-    }
-    
-    func changeModes(newMode: operations) {
-        if previousNumber == 0 {
-            return
-        }
-        
-        currentMode = newMode
-        previousButtonWasMode = true
-    }
-    
-    func convertLabelTextToInt() -> Int {
-        guard let button: Int = Int(textDisplay) else {
-            displayError()
-            return -1
-        }
-        
-        return button
-    }
-    
-    func displayError() {
-        OutputDisplay.text = "Error"
-        InputDisplay.text = "Error"
     }
 }
 
