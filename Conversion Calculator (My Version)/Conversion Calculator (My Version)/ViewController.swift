@@ -115,6 +115,10 @@ class ConversionCalculatorViewController: UIViewController {
         {
             outputNum = inputNum * 0.15
         }
+        else
+        {
+            print("Invalid input!")
+        }
         
         outputNum = round(outputNum * 100) / 100
         
