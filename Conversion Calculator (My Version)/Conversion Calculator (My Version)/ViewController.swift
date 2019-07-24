@@ -89,7 +89,7 @@ class ConversionCalculatorViewController: UIViewController {
             outputNum = (inputNum - 32) * 5/9
         }
         else if inputUnit == "km" {
-            outputNum = inputNum / 1.6093
+            outputNum = inputNum * 0.621371
         }
         else if inputUnit == "mi" {
             outputNum = inputNum * 1.6093
@@ -99,12 +99,6 @@ class ConversionCalculatorViewController: UIViewController {
         }
         else if inputUnit == "cm" {
             outputNum = inputNum / 100
-        }
-        else if inputUnit == "km" {
-            outputNum = inputNum * 1000
-        }
-        else if inputUnit == "kg" {
-            outputNum = inputNum * 1000
         }
         else if inputUnit == "$" {
             outputNum = inputNum * 6.88190
@@ -149,69 +143,69 @@ class ConversionCalculatorViewController: UIViewController {
     @IBAction func number8Button(_ sender: Any) {
         inputString.append("8")
         inputNum = Double(inputString) ?? 0
-        self.InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
-        self.OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
+        InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
+        OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
     }
     
     @IBAction func number7Button(_ sender: Any) {
         inputString.append("7")
         inputNum = Double(inputString) ?? 0
-        self.InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
-        self.OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
+        InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
+        OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
     }
     
     @IBAction func number6Button(_ sender: Any) {
         inputString.append("6")
         inputNum = Double(inputString) ?? 0
-        self.InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
-        self.OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
+        InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
+        OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
     }
     
     @IBAction func number5Button(_ sender: Any) {
         inputString.append("5")
         inputNum = Double(inputString) ?? 0
-        self.InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
-        self.OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
+        InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
+        OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
     }
     
     @IBAction func number4Button(_ sender: Any) {
         inputString.append("4")
         inputNum = Double(inputString) ?? 0
-        self.InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
-        self.OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
+        InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
+        OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
     }
     
     @IBAction func number3Button(_ sender: Any) {
         inputString.append("3")
         inputNum = Double(inputString) ?? 0
-        self.InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
-        self.OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
+        InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
+        OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
     }
     
     @IBAction func number2Button(_ sender: Any) {
         inputString.append("2")
         inputNum = Double(inputString) ?? 0
-        self.InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
-        self.OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
+        InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
+        OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
     }
     
     @IBAction func number1Button(_ sender: Any) {
         inputString.append("1")
         inputNum = Double(inputString) ?? 0
-        self.InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
-        self.OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
+        InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
+        OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
     }
     
     @IBAction func number0Button(_ sender: Any) {
         inputString.append("0")
         inputNum = Double(inputString) ?? 0
-        self.InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
-        self.OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
+        InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
+        OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
     }
     
     @IBAction func decimalButton(_ sender: Any) {
             inputString.append(".")
-            self.InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
-            self.OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
-        }
+            InputDisplay.text = createInput(inputNum: inputNum, inputUnit: inputUnit)
+            OutputDisplay.text = createOutput(inputNum: inputNum, outputUnit: outputUnit)
     }
+}
