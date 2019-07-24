@@ -120,11 +120,9 @@ class ConversionCalculatorViewController: UIViewController {
         inputString = ""
         outputString = ""
         
-        InputDisplay.text = conversions[0].inputUnit
-        OutputDisplay.text = conversions[0].outputUnit
+        InputDisplay.text = inputUnit
+        OutputDisplay.text = outputUnit
         
-        outputUnit = conversions[0].outputUnit
-        inputUnit = conversions[0].inputUnit
     }
     
     @IBAction func signChangeButton(_ sender: Any) {
