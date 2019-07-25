@@ -66,8 +66,8 @@ class ConversionCalculatorViewController: UIViewController {
                 self.inputNum = Double(self.inputString) ?? 0
                 self.inputUnit = unitconverter.inputUnit
                 self.outputUnit = unitconverter.outputUnit
-                self.InputDisplay.text = unitconverter.inputUnit
-                self.OutputDisplay.text = unitconverter.outputUnit
+                self.InputDisplay.text = self.createInput(inputNum: self.inputNum, inputUnit: self.inputUnit)
+                self.OutputDisplay.text = self.createOutput(inputNum: self.inputNum, outputUnit: self.outputUnit)
             }))
         }
         
