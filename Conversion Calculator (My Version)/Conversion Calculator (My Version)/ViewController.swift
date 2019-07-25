@@ -23,6 +23,8 @@ enum TypeConverter: String {
     case cm_to_m = "Centimeters to Meters"
     case dol_to_chy = "US Dollars to Chinese Yuan"
     case chy_to_dol = "Chinese Yuan to US Dollars"
+    case lbs_to_kg = "Pounds to Kilograms"
+    case kg_to_lbs = "Kilograms to Pounds"
 }
 
 class ConversionCalculatorViewController: UIViewController {
@@ -36,7 +38,9 @@ class ConversionCalculatorViewController: UIViewController {
                         UnitConverter(label: TypeConverter.m_to_cm.rawValue, convertFrom: "m", convertTo: "cm"),
                         UnitConverter(label: TypeConverter.cm_to_m.rawValue, convertFrom: "cm", convertTo: "m"),
                         UnitConverter(label: TypeConverter.dol_to_chy.rawValue, convertFrom: "$", convertTo: "¥"),
-                        UnitConverter(label: TypeConverter.chy_to_dol.rawValue, convertFrom: "¥", convertTo: "$")]
+                        UnitConverter(label: TypeConverter.chy_to_dol.rawValue, convertFrom: "¥", convertTo: "$"),
+                        UnitConverter(label: TypeConverter.lbs_to_kg.rawValue, convertFrom: "lbs", convertTo: "kg"),
+                        UnitConverter(label: TypeConverter.kg_to_lbs.rawValue, convertFrom: "kg", convertTo: "lbs")]
     
     var inputNum: Double = 0
     var outputNum: Double = 0
@@ -58,7 +62,7 @@ class ConversionCalculatorViewController: UIViewController {
     }
 
     @IBAction func Converter(_ sender: Any) {
-        let menuOptions = UIAlertController(title: "Converter Menu", message: "Choose a converter of your choice!", preferredStyle:  UIAlertController.Style.actionSheet)
+        let menuOptions = UIAlertController(title: "Converter Menu", message: "Choose a converter of your choice!", preferredStyle:  UIAlertController.Style.alert)
         
         for unitconverter in conversions {
             menuOptions.addAction(UIAlertAction(title: unitconverter.label, style: UIAlertAction.Style.default, handler: {
@@ -66,8 +70,8 @@ class ConversionCalculatorViewController: UIViewController {
                 self.inputNum = Double(self.inputString) ?? 0
                 self.convertFrom = unitconverter.convertFrom
                 self.convertTo = unitconverter.convertTo
-                self.InputDisplay.text = self.createInput(inputNum: self.inputNum, convertFrom: self.convertFrom)
-                self.OutputDisplay.text = self.createOutput(inputNum: self.inputNum, convertTo: self.convertTo)
+                self.InputDisplay.text = self.convertProcess(inputNum: self.inputNum, convertFrom: self.convertFrom)
+                self.OutputDisplay.text = self.convertComplete(inputNum: self.inputNum, convertTo: self.convertTo)
             }))
         }
         
@@ -75,14 +79,14 @@ class ConversionCalculatorViewController: UIViewController {
         self.present(menuOptions, animated: true, completion: nil)
     }
     
-    func createInput(inputNum: Double, convertFrom: String) -> String
+    func convertProcess(inputNum: Double, convertFrom: String) -> String
     {
         var inputString1 = String(inputNum)
         inputString1.append(convertFrom)
         return inputString1
     }
     
-    func createOutput(inputNum: Double, convertTo: String) -> String {
+    func convertComplete(inputNum: Double, convertTo: String) -> String {
         if convertFrom == "C°"
         {
             outputNum = inputNum * 9/5 + 32
@@ -105,7 +109,7 @@ class ConversionCalculatorViewController: UIViewController {
         }
         else if convertFrom == "cm"
         {
-            outputNum = inputNum / 100
+            outputNum = inputNum * 0.01
         }
         else if convertFrom == "$"
         {
@@ -114,6 +118,14 @@ class ConversionCalculatorViewController: UIViewController {
         else if convertFrom == "¥"
         {
             outputNum = inputNum * 0.15
+        }
+        else if convertFrom == "lbs"
+        {
+            outputNum = inputNum * 2.205
+        }
+        else if convertFrom == "kg"
+        {
+            outputNum = inputNum * 0.453592
         }
         else
         {
@@ -138,94 +150,94 @@ class ConversionCalculatorViewController: UIViewController {
     @IBAction func signChangeButton(_ sender: Any)
     {
         inputNum *= -1
-        InputDisplay.text = createInput(inputNum: inputNum, convertFrom: convertFrom)
-        OutputDisplay.text = createOutput(inputNum: inputNum, convertTo: convertTo)
+        InputDisplay.text = convertProcess(inputNum: inputNum, convertFrom: convertFrom)
+        OutputDisplay.text = convertComplete(inputNum: inputNum, convertTo: convertTo)
     }
     
     @IBAction func number9Button(_ sender: Any)
     {
         inputString.append("9")
         inputNum = Double(inputString) ?? 0
-        InputDisplay.text = createInput(inputNum: inputNum, convertFrom: convertFrom)
-        OutputDisplay.text = createOutput(inputNum: inputNum, convertTo: convertTo)
+        InputDisplay.text = convertProcess(inputNum: inputNum, convertFrom: convertFrom)
+        OutputDisplay.text = convertComplete(inputNum: inputNum, convertTo: convertTo)
     }
     
     @IBAction func number8Button(_ sender: Any)
     {
         inputString.append("8")
         inputNum = Double(inputString) ?? 0
-        InputDisplay.text = createInput(inputNum: inputNum, convertFrom: convertFrom)
-        OutputDisplay.text = createOutput(inputNum: inputNum, convertTo: convertTo)
+        InputDisplay.text = convertProcess(inputNum: inputNum, convertFrom: convertFrom)
+        OutputDisplay.text = convertComplete(inputNum: inputNum, convertTo: convertTo)
     }
     
     @IBAction func number7Button(_ sender: Any)
     {
         inputString.append("7")
         inputNum = Double(inputString) ?? 0
-        InputDisplay.text = createInput(inputNum: inputNum, convertFrom: convertFrom)
-        OutputDisplay.text = createOutput(inputNum: inputNum, convertTo: convertTo)
+        InputDisplay.text = convertProcess(inputNum: inputNum, convertFrom: convertFrom)
+        OutputDisplay.text = convertComplete(inputNum: inputNum, convertTo: convertTo)
     }
     
     @IBAction func number6Button(_ sender: Any)
     {
         inputString.append("6")
         inputNum = Double(inputString) ?? 0
-        InputDisplay.text = createInput(inputNum: inputNum, convertFrom: convertFrom)
-        OutputDisplay.text = createOutput(inputNum: inputNum, convertTo: convertTo)
+        InputDisplay.text = convertProcess(inputNum: inputNum, convertFrom: convertFrom)
+        OutputDisplay.text = convertComplete(inputNum: inputNum, convertTo: convertTo)
     }
     
     @IBAction func number5Button(_ sender: Any)
     {
         inputString.append("5")
         inputNum = Double(inputString) ?? 0
-        InputDisplay.text = createInput(inputNum: inputNum, convertFrom: convertFrom)
-        OutputDisplay.text = createOutput(inputNum: inputNum, convertTo: convertTo)
+        InputDisplay.text = convertProcess(inputNum: inputNum, convertFrom: convertFrom)
+        OutputDisplay.text = convertComplete(inputNum: inputNum, convertTo: convertTo)
     }
     
     @IBAction func number4Button(_ sender: Any)
     {
         inputString.append("4")
         inputNum = Double(inputString) ?? 0
-        InputDisplay.text = createInput(inputNum: inputNum, convertFrom: convertFrom)
-        OutputDisplay.text = createOutput(inputNum: inputNum, convertTo: convertTo)
+        InputDisplay.text = convertProcess(inputNum: inputNum, convertFrom: convertFrom)
+        OutputDisplay.text = convertComplete(inputNum: inputNum, convertTo: convertTo)
     }
     
     @IBAction func number3Button(_ sender: Any)
     {
         inputString.append("3")
         inputNum = Double(inputString) ?? 0
-        InputDisplay.text = createInput(inputNum: inputNum, convertFrom: convertFrom)
-        OutputDisplay.text = createOutput(inputNum: inputNum, convertTo: convertTo)
+        InputDisplay.text = convertProcess(inputNum: inputNum, convertFrom: convertFrom)
+        OutputDisplay.text = convertComplete(inputNum: inputNum, convertTo: convertTo)
     }
     
     @IBAction func number2Button(_ sender: Any)
     {
         inputString.append("2")
         inputNum = Double(inputString) ?? 0
-        InputDisplay.text = createInput(inputNum: inputNum, convertFrom: convertFrom)
-        OutputDisplay.text = createOutput(inputNum: inputNum, convertTo: convertTo)
+        InputDisplay.text = convertProcess(inputNum: inputNum, convertFrom: convertFrom)
+        OutputDisplay.text = convertComplete(inputNum: inputNum, convertTo: convertTo)
     }
     
     @IBAction func number1Button(_ sender: Any)
     {
         inputString.append("1")
         inputNum = Double(inputString) ?? 0
-        InputDisplay.text = createInput(inputNum: inputNum, convertFrom: convertFrom)
-        OutputDisplay.text = createOutput(inputNum: inputNum, convertTo: convertTo)
+        InputDisplay.text = convertProcess(inputNum: inputNum, convertFrom: convertFrom)
+        OutputDisplay.text = convertComplete(inputNum: inputNum, convertTo: convertTo)
     }
     
     @IBAction func number0Button(_ sender: Any)
     {
         inputString.append("0")
         inputNum = Double(inputString) ?? 0
-        InputDisplay.text = createInput(inputNum: inputNum, convertFrom: convertFrom)
-        OutputDisplay.text = createOutput(inputNum: inputNum, convertTo: convertTo)
+        InputDisplay.text = convertProcess(inputNum: inputNum, convertFrom: convertFrom)
+        OutputDisplay.text = convertComplete(inputNum: inputNum, convertTo: convertTo)
     }
     
     @IBAction func decimalButton(_ sender: Any)
     {
         inputString.append(".")
-        InputDisplay.text = createInput(inputNum: inputNum, convertFrom: convertFrom)
-        OutputDisplay.text = createOutput(inputNum: inputNum, convertTo: convertTo)
+        InputDisplay.text = convertProcess(inputNum: inputNum, convertFrom: convertFrom)
+        OutputDisplay.text = convertComplete(inputNum: inputNum, convertTo: convertTo)
     }
 }
