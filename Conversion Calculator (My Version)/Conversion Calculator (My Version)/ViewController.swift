@@ -48,8 +48,8 @@ class ConversionCalculatorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        OutputDisplay.text = conversions[0].outputUnit
-        InputDisplay.text = conversions[0].inputUnit
+        OutputDisplay.text = "0.0C°"
+        InputDisplay.text = "0.0F°"
         
         outputUnit = conversions[0].outputUnit
         inputUnit = conversions[0].inputUnit
@@ -129,13 +129,10 @@ class ConversionCalculatorViewController: UIViewController {
     
     @IBAction func clearButton(_ sender: Any) {
         inputNum = 0
-        
         inputString = ""
         outputString = ""
-        
         InputDisplay.text = inputUnit
         OutputDisplay.text = outputUnit
-        
     }
     
     @IBAction func signChangeButton(_ sender: Any)
